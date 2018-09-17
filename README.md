@@ -2,25 +2,11 @@
 
 版本：1.0
 
-协议最后更新：2018.8.31
-
-English Version: https://github.com/southex/SimpleWallet/blob/master/README_en.md （ EOSShenzhen 翻译）
+协议最后更新：2018.09.17
 
 ## 简介
-SimpleWallet是一个EOS钱包和dapp的通用对接协议。
+SimpleWallet是一个数字资产钱包和dapp的通用对接协议。
 
-目前EOS的钱包应用众多、dapp也在快速发展中，在实际对接过程中，各方标准不统一，对接耗时耗力。
-遵照此协议，可以减少各方开发适配工作，低耦合的实现钱包对dapp进行登录授权和支付。
-钱包接入方可在 https://www.southex.com 进行在线测试。 
-
-## 协议发起方
-本协议由SouthEX起草，MeetOne、More、TokenPocket、KKWallet、HaloWallet 共同参与讨论和修改。
-
-除以上五家钱包之外，目前正在接入的钱包商还包括：EOS LIVE钱包、番茄钱包、PocketEOS及韩国的coinus等。
-
-目前接入此协议的名单：https://github.com/southex/SimpleWallet/blob/master/supporter_list.md
-
-欢迎更多的钱包和dapp接入此协议，并向我们提交你们的产品信息。
 
 ## 功能列表
 - 登录
@@ -41,13 +27,31 @@ SimpleWallet是一个EOS钱包和dapp的通用对接协议。
 
 以下为安卓端的协议接入方法：
 
+#### Ethereum
+拦截协议为：simplewallet://ethereum.io
+#### EOS.IO
 拦截协议为：simplewallet://eos.io
 
 dapp的移动端应用可以调用此协议，传递数据给钱包APP，传递数据的请求格式为：
 
-simplewallet://eos.io?param={json数据}
+#### Ethereum
+拦截协议为：simplewallet://ethereum.io?param={json数据}
+#### EOS.IO
+拦截协议为：simplewallet://eos.io?param={json数据}
 
-对于iOS端，由于其app之间的调用机制和安卓差别很大，制定统一的协议非常复杂，且目前基于iOS的dapp和钱包很少，因此SimpleWallet不对iOS上进行协议统一。各方钱包和dapp可自行协商对接方法。
+以下为iOS端的协议接入方法(以麦子钱包为例)：
+
+#### Ethereum
+拦截协议为：mathwallet://ethereum.io
+#### EOS.IO
+拦截协议为：mathwallet://eos.io
+
+dapp的移动端应用可以调用此协议，传递数据给钱包APP，传递数据的请求格式为：
+
+#### Ethereum
+拦截协议为：mathwallet://ethereum.io?param={json数据}
+#### EOS.IO
+拦截协议为：mathwallet://eos.io?param={json数据}
 
 ### 2. 登录
  
@@ -65,6 +69,7 @@ simplewallet://eos.io?param={json数据}
 {
     protocol	string   // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
     version     string   // 协议版本信息，如1.0
+    blockchain  string   // 公链标识（eosio、ethereum等）
     dappName    string   // dapp名字
     dappIcon    string   // dapp图标 
     action      string   // 赋值为login
@@ -86,10 +91,11 @@ sign = ecc.sign(data, privateKey)
 {
     protocol   string     // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
     version    string     // 协议版本信息，如1.0
+    blockchain  string    // 公链标识（eosio、ethereum等）
     timestamp  number     // 当前UNIX时间戳
-    sign       string     // eos签名
+    sign       string     // eos、ethereum签名
     uuID       string     // dapp server生成的，用于此次登录验证的唯一标识     
-    account    string     // eos账户名
+    account    string     // eos账户名、ethereum地址等
     ref        string     // 来源,如钱包名
 }
 ```
@@ -113,6 +119,7 @@ sign = ecc.sign(data, privateKey)
 {
     protocol	string   // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
     version     string   // 协议版本信息，如1.0
+    blockchain  string   // 公链标识（eosio、ethereum等）
     dappName    string   // dapp名字，用于在钱包APP中展示
     dappIcon    string   // dapp图标Url，用于在钱包APP中展示
     action      string   // 赋值为login
@@ -137,16 +144,17 @@ sign = ecc.sign(data, privateKey)
 {
 	protocol    string   // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
     	version     string   // 协议版本信息，如1.0
+        blockchain  string   // 公链标识（eosio、ethereum等）
 	dappName    string   // dapp名字，用于在钱包APP中展示，可选
     	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选
 	action      string   // 支付时，赋值为transfer，必须
 	from        string   // 付款人的EOS账号，可选
 	to          string   // 收款人的EOS账号，必须
 	amount      number   // 转账数量，必须
-	contract    string   // 转账的token所属的contract账号名，必须
+	contract    string   // 转账的token所属的contract账号名或地址，必须
 	symbol      string   // 转账的token名称，必须
 	precision   number   // 转账的token的精度，小数点后面的位数，必须
-	dappData    string   // 由dapp生成的业务参数信息，需要钱包在转账时附加在memo中发出去，格式为:k1=v1&k2=v2，可选
+	dappData    string   // 由dapp生成的业务参数信息，需要钱包在转账时附加在memo或data中发出去，格式为:k1=v1&k2=v2，可选
 			     // 钱包转账时还可附加ref参数标明来源，如：k1=v1&k2=v2&ref=walletname
 	desc	    string   // 交易的说明信息，钱包在付款UI展示给用户，最长不要超过128个字节，可选			     
 	expired	    number   // 二维码过期时间，unix时间戳
@@ -155,8 +163,8 @@ sign = ecc.sign(data, privateKey)
 			     // result的值为：0为用户取消，1为成功,  2为失败；txID为EOS主网上该笔交易的id（若有）
 }
 ```
-- 钱包组装上述数据，生成一笔EOS的transaction，用户授权此笔转账后，提交转账数据到EOS主网；若有callback参数，则进行回调访问
-- dapp可根据callback中的txID去主网查询此笔交易（不能完全依赖此方式来确认用户的付款）；或dapp自行搭建节点监控EOS主网，检查代币是否到账
+- 钱包组装上述数据，生成一笔EOS或Ethereum的transaction，用户授权此笔转账后，提交转账数据到EOS或Ethereum主网；若有callback参数，则进行回调访问
+- dapp可根据callback中的txID去主网查询此笔交易（不能完全依赖此方式来确认用户的付款）；或dapp自行搭建节点监控EOS或Ethereum主网，检查代币是否到账
 - 对于流行币种如IQ，如果二维码中给出的contract名和官方的合约名不一致，钱包方要提醒用户，做二次确认
 - 钱包应该提醒用户注意辨别二维码的来源，避免被钓鱼攻击
 
@@ -170,16 +178,17 @@ sign = ecc.sign(data, privateKey)
 {
 	protocol    string   // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
 	version     string   // 协议版本信息，如1.0
+    	blockchain  string   // 公链标识（eosio、ethereum等）
 	action      string   // 支付时，赋值为transfer
 	dappName    string   // dapp名字，用于在钱包APP中展示，可选
     	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选	
-	from        string   // 付款人的EOS账号，可选
-	to          string   // 收款人的EOS账号，必须
+	from        string   // 付款人的EOS账号或Ethereum地址，可选
+	to          string   // 收款人的EOS账号或Ethereum地址，必须
 	amount      number   // 转账数量，必须
-	contract    string   // 转账的token所属的contract账号名	
+	contract    string   // 转账的token所属的contract账号名或地址	
 	symbol      string   // 转账的token名称，必须
 	precision   number   // 转账的token的精度，小数点后面的位数，必须	
-	dappData    string   // 由dapp生成的业务参数信息，需要钱包在转账时附加在memo中发出去，格式为:k1=v1&k2=v2，可选
+	dappData    string   // 由dapp生成的业务参数信息，需要钱包在转账时附加在memo或data中发出去，格式为:k1=v1&k2=v2，可选
 			     // 钱包转账时还可附加ref参数标明来源，如：k1=v1&k2=v2&ref=walletname
 	desc	    string   // 交易的说明信息，钱包在付款UI展示给用户，最长不要超过128个字节，可选			     
         callback    string   // 用户完成操作后，钱包回调拉起dapp移动端的回调URL,如appABC://abc.com?action=login，可选
@@ -187,8 +196,8 @@ sign = ecc.sign(data, privateKey)
 			     // result的值为：0为用户取消，1为成功,  2为失败；txID为EOS主网上该笔交易的id（若有）
 }
 ```
-- 钱包组装上述数据，生成一笔EOS的transaction，用户授权此笔转账后，提交转账数据到EOS主网；如果有callback，则回调拉起dapp的应用
-- dapp可根据callback里的txID去主网查询此笔交易（不能完全依赖此方式来确认用户的付款）；或自行搭建节点监控EOS主网，检查代币是否到账
+- 钱包组装上述数据，生成一笔EOS或Ethereum的transaction，用户授权此笔转账后，提交转账数据到EOS或Ethereum主网；如果有callback，则回调拉起dapp的应用
+- dapp可根据callback里的txID去主网查询此笔交易（不能完全依赖此方式来确认用户的付款）；或自行搭建节点监控EOS或Ethereum主网，检查代币是否到账
 
 
 ### 错误处理
@@ -222,16 +231,3 @@ sign = ecc.sign(data, privateKey)
 * SimpleWallet协议为何不制定钱包和dapp之间的智能合约调用的标准？
 
   > 同上。
-
-
-## 更新说明
-- 9.6
-  增加了FAQ内容
-- 8.17 
-  增加测试链接；
-  支付操作中增加了callback参数；
-  修改两个字段的命名，expire->expired,callbackUrl->callback
-- 8.16 
-  修改dapp的应用调用钱包APP时的callback，钱包只需要附加result结果即可，无需拼装action参数
-- 8.15 
-  简化协议，取消info字段；增加desc字段，此字段是string类型，用来描述一个交易
