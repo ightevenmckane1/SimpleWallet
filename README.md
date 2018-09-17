@@ -25,7 +25,7 @@ SimpleWallet是一个数字资产钱包和dapp的通用对接协议。
 
 钱包APP应在操作系统内注册拦截协议（URL Scheme、appLink），以便dapp的APP拉起钱包应用。
 
-以下为安卓端的协议接入方法：
+以下为协议接入方法：
 
 #### Ethereum
 拦截协议为：simplewallet://ethereum.io
@@ -34,20 +34,13 @@ SimpleWallet是一个数字资产钱包和dapp的通用对接协议。
 
 dapp的移动端应用可以调用此协议，传递数据给钱包APP，传递数据的请求格式为：
 
+#### Android
 #### Ethereum
 拦截协议为：simplewallet://ethereum.io?param={json数据}
 #### EOS.IO
 拦截协议为：simplewallet://eos.io?param={json数据}
 
-以下为iOS端的协议接入方法(以麦子钱包为例)：
-
-#### Ethereum
-拦截协议为：mathwallet://ethereum.io
-#### EOS.IO
-拦截协议为：mathwallet://eos.io
-
-dapp的移动端应用可以调用此协议，传递数据给钱包APP，传递数据的请求格式为：
-
+#### iOS(以麦子钱包为例)
 #### Ethereum
 拦截协议为：mathwallet://ethereum.io?param={json数据}
 #### EOS.IO
