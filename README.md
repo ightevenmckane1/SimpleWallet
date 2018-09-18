@@ -141,8 +141,8 @@ sign = ecc.sign(data, privateKey)
 	dappName    string   // dapp名字，用于在钱包APP中展示，可选
     	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选
 	action      string   // 支付时，赋值为transfer，必须
-	from        string   // 付款人的EOS账号，可选
-	to          string   // 收款人的EOS账号，必须
+	from        string   // 付款人的EOS账号或Ethereum地址，可选
+	to          string   // 收款人的EOS账号或Ethereum地址，必须
 	amount      number   // 转账数量，必须
 	contract    string   // 转账的token所属的contract账号名或地址，必须
 	symbol      string   // 转账的token名称，必须
