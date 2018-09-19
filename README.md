@@ -111,7 +111,7 @@ sign = ecc.sign(data, privateKey)
     action      string   // 赋值为login
     uuID        string   // dapp生成的，用于dapp登录验证唯一标识   
     loginUrl    string   // dapp server生成的，用于接受此次登录验证的URL 
-    expired	number   // 二维码过期时间，unix时间戳
+    expired	number   // 登录过期时间，unix时间戳
     loginMemo	string   // 登录的备注信息，钱包用来展示，可选
     callback    string   // 用户完成操作后，钱包回调拉起dapp移动端的回调URL,如appABC://abc.com?action=login，可选
     		         // 钱包回调时在此URL后加上操作结果(&result)，如：appABC://abc.com?action=login&result=1, 
