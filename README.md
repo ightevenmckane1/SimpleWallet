@@ -26,18 +26,10 @@ SimpleWallet是一个数字资产钱包和dapp的通用对接协议。
 钱包APP应在操作系统内注册拦截协议（URL Scheme、appLink），以便dapp的APP拉起钱包应用。
 
 以下为协议接入方法：
+> mathwallet://mathwallet.org?param={json数据}
 
-- Ethereum 拦截协议(下面二选一)
-
-> simplewallet://ethereum.io?param={json数据}
-
-> mathwallet://ethereum.io?param={json数据}
-
-- EOS.IO 拦截协议(下面二选一)
-
-> simplewallet://eos.io?param={json数据}
-
-> mathwallet://eos.io?param={json数据}
+兼容之前的SimpleWallet协议
+> simplewallet://eos.io?param={json数据}  
 
 ### 2. 登录
  
@@ -179,8 +171,8 @@ sign = ecc.sign(data, privateKey)
 			     // 钱包转账时还可附加ref参数标明来源，如：k1=v1&k2=v2&ref=walletname
 	desc	    string   // 交易的说明信息，钱包在付款UI展示给用户，最长不要超过128个字节，可选		     
 	expired	    number   // 交易过期时间，unix时间戳			     
-        callback    string   // 用户完成操作后，钱包回调拉起dapp移动端的回调URL,如appABC://abc.com?action=login，可选
-    		             // 钱包回调时在此URL后加上操作结果(result、txID)，如：appABC://abc.com?action=login&result=1&txID=xxx, 
+        callback    string   // 用户完成操作后，钱包回调拉起dapp移动端的回调URL,如appABC://abc.com?action=transfer，可选
+    		             // 钱包回调时在此URL后加上操作结果(result、txID)，如：appABC://abc.com?action=transfer&result=1&txID=xxx, 
 			     // result的值为：0为用户取消，1为成功,  2为失败；txID为EOS主网上该笔交易的id（若有）
 }
 ```
@@ -197,25 +189,3 @@ sign = ecc.sign(data, privateKey)
     error string    //返回的提示信息
 }
 ```
-
-## FAQ
-
-* 如何避免用户扫描了伪造的二维码？
-
-  > 虽然可以通过创建一个统一的dapp和钱包注册中心，通过白名单的方式来避免钓鱼，但这会使此协议更复杂、更中心化，从而也更脆弱。我们建议钱包商在界面上提醒用户注意识别二维码的来源，提高用户的安全意识，同时向用户展示签名的原始信息。
-
-* 二维码的信息过多，可否增加压缩算法？
-
-  > 我们进行过测试，能压缩20-30%左右，效果不算特别理想，因此协议中没有将压缩算法正式纳入。虽然二维码看起来过密，但钱包基本均可正常识别。我们建议，如果二维码信息过多，dapp在展示二维码的时候，适当加大尺寸，让用户不必将手机凑近屏幕，提高钱包的识别速度。
-
-* 在验证登录信息的时候，dapp应该验证active还是owner的签名？
-
-  > 我们建议dapp先验证active的签名，若不通过，再验证owner。对于钱包商来说，建议用active权限来签名。
-
-* 对dapp内嵌到钱包里面的场景，SimpleWallet协议为何不制定相关登录和支付标准？
-
-  > 目前多数钱包均在开发或已开发出自己的一套相关标准，统一标准的代价很大。我们建议各钱包商也参考scatter的方案来，这样会大大降低在web端已经接入了scatter的dapp们的适配成本。
-
-* SimpleWallet协议为何不制定钱包和dapp之间的智能合约调用的标准？
-
-  > 同上。
