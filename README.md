@@ -47,7 +47,7 @@ SimpleWallet是一个数字资产钱包和dapp的通用对接协议。
 {
     protocol	string   // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
     version     string   // 协议版本信息，如1.0
-    blockchain  string   // 公链标识（eosio、ethereum等）
+    blockchain  string   // 公链标识（eosio、eosforce、ethereum等）
     dappName    string   // dapp名字
     dappIcon    string   // dapp图标 
     action      string   // 赋值为login
