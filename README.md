@@ -179,10 +179,67 @@ sign = ecc.sign(data, privateKey)
 - 钱包组装上述数据，生成一笔EOS或Ethereum的transaction，用户授权此笔转账后，提交转账数据到EOS或Ethereum主网；如果有callback，则回调拉起dapp的应用
 - dapp可根据callback里的txID去主网查询此笔交易（不能完全依赖此方式来确认用户的付款）；或自行搭建节点监控EOS或Ethereum主网，检查代币是否到账
 
+### 4. 交易体
+#### 场景1：钱包扫描二维码，执行Transaction
 
+> Ethereum 
+ 参考支付场景，dappData用来存放交易的Data数据。
+ 
+> EOS、EOS原力
+ ```
+// 传递给钱包APP的数据包结构
+{
+	protocol    string   // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
+	version     string   // 协议版本信息，如1.0
+    	blockchain  string   // 公链标识（eosio、ethereum等）
+	action      string   // 支付时，赋值为transaction
+	dappName    string   // dapp名字，用于在钱包APP中展示，可选
+    	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选	
+	actions     array    // [{
+			     //		"code": "eosio.token",
+			     //		"action": "transfer",
+			     //	 	"binargs":"00000"
+			     //	}]
+	account     string   // 要执行交易的账户
+	desc	    string   // 交易的说明信息，钱包在付款UI展示给用户，最长不要超过128个字节，可选		     
+	expired	    number   // 交易过期时间，unix时间戳			     
+        callback    string   // 用户完成操作后，钱包回调拉起dapp移动端的回调URL,如https://abc.com?action=transaction&qrcID=123，可选
+    		             // 钱包回调时在此URL后加上操作结果(result、txID)，如：https://abc.com?action=transaction&qrcID=123&result=1&txID=xxx, 
+			     // result的值为：0为用户取消，1为成功,  2为失败；txID为EOS主网上该笔交易的id（若有）
+}
+
+```
+#### 场景2：dapp的移动端拉起钱包App，执行Transaction
+
+> Ethereum 
+ 参考支付场景，dappData用来存放交易的Data数据。
+ 
+> EOS、EOS原力
+ ```
+// 传递给钱包APP的数据包结构
+{
+	protocol    string   // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
+	version     string   // 协议版本信息，如1.0
+    	blockchain  string   // 公链标识（eosio、ethereum等）
+	action      string   // 支付时，赋值为transaction
+	dappName    string   // dapp名字，用于在钱包APP中展示，可选
+    	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选	
+	actions     array    // [{
+			     //		"code": "eosio.token",
+			     //		"action": "transfer",
+			     //	 	"binargs":"00000"
+			     //	}]
+	account     string   // 要执行交易的账户
+	desc	    string   // 交易的说明信息，钱包在付款UI展示给用户，最长不要超过128个字节，可选		     
+	expired	    number   // 交易过期时间，unix时间戳			     
+        callback    string   // 用户完成操作后，钱包回调拉起dapp移动端的回调URL,如appABC://abc.com?action=transfer，可选
+    		             // 钱包回调时在此URL后加上操作结果(result、txID)，如：appABC://abc.com?action=transaction&result=1&txID=xxx, 
+			     // result的值为：0为用户取消，1为成功,  2为失败；txID为EOS主网上该笔交易的id（若有）
+}
+
+```
 ### 错误处理
 - code不等于0则请求失败
-```
 // 错误返回 
 {
     code number     //错误符，等于0是成功，大于0说明请求失败，dapp返回具体的错误码
