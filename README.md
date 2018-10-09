@@ -200,7 +200,7 @@ sign = ecc.sign(data, privateKey)
 			     		"action": "transfer",
 			     	 	"binargs":"00000"
 				}]
-	account     string   // 要执行交易的账户
+	from        string   // 要执行交易的账户
 	desc	    string   // 交易的说明信息，钱包在付款UI展示给用户，最长不要超过128个字节，可选		     
 	expired	    number   // 交易过期时间，unix时间戳			     
 	callback    string   // 用户完成操作后，钱包回调拉起dapp移动端的回调URL,如https://abc.com?action=transaction&qrcID=123，可选
