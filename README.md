@@ -263,7 +263,7 @@ sign = ecc.sign(data, privateKey)
 }
 
 ```
-### 错误处理
+### 网络回调接口错误处理
 - code不等于0则请求失败
 ```
 // 错误返回 
@@ -272,4 +272,19 @@ sign = ecc.sign(data, privateKey)
     code number     //错误符，等于0是成功，大于0说明请求失败，dapp返回具体的错误码
     error string    //返回的提示信息
 }
+```
+
+### 麦子钱包DApp跳转错误处理
+- result不等与1 表示取消或失败 
+```
+// 错误返回 
+
+{
+    errCode number     		//错误码
+    errorMesssge string    	//返回的提示信息
+}
+// 10000 取消
+// 10001 账户不存在
+// 10002 数据格式异常
+// 10003 其它错误
 ```
