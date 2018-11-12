@@ -253,7 +253,7 @@ sign = ecc.sign(data, privateKey)
 	protocol    string   // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
 	version     string   // 协议版本信息，如1.0
 	blockchain  string   // 公链标识（eosio、ethereum等）
-	action      string   // 支付时，赋值为openUrl
+	action      string   // 跳转时，赋值为openUrl
 	dappName    string   // dapp名字，用于在钱包APP中展示，可选
 	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选
 	desc	    string   // 跳转的说明信息，钱包在付款UI展示给用户，最长不要超过128个字节，可选
