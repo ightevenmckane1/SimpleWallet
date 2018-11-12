@@ -257,13 +257,15 @@ sign = ecc.sign(data, privateKey)
 	dappName    string   // dapp名字，用于在钱包APP中展示，可选
 	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选
 	desc	    string   // 跳转的说明信息，钱包在付款UI展示给用户，最长不要超过128个字节，可选
-	dappUrl     string   // 要跳转的DApp URL链接		     
+	dappUrl     string   // 要跳转的DApp URL链接，可选	     
 }
 
 ```
 ### 错误处理
 - code不等于0则请求失败
+```
 // 错误返回 
+
 {
     code number     //错误符，等于0是成功，大于0说明请求失败，dapp返回具体的错误码
     error string    //返回的提示信息
