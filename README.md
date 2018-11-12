@@ -278,13 +278,5 @@ sign = ecc.sign(data, privateKey)
 - result不等与1 表示取消或失败 
 ```
 // 错误返回 
-
-{
-    errCode number     		//错误码
-    errorMesssge string    	//返回的提示信息
-}
-// 10000 取消
-// 10001 账户不存在
-// 10002 数据格式异常
-// 10003 其它错误
+errorMesssge string    	//返回的提示信息
 ```
