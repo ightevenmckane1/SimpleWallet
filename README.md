@@ -60,7 +60,7 @@ SimpleWallet是一个数字资产钱包和dapp的通用对接协议。
     action      string   // 赋值为login
     uuID        string   // dapp server生成的，用于此次登录验证的唯一标识   
     loginUrl    string   // dapp server上用于接受登录验证信息的url
-    expired	number   // 二维码过期时间，unix时间戳
+    expired		number		// 二维码过期时间，unix时间戳
     loginMemo	string   // 登录备注信息，钱包用来展示，可选
 }
 ```
@@ -76,7 +76,7 @@ sign = ecc.sign(data, privateKey)
 {
     protocol   string     // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
     version    string     // 协议版本信息，如1.0
-    blockchain  string    // 公链标识（eosio、eosforce、ethereum等）
+    blockchain string    // 公链标识（eosio、eosforce、ethereum等）
     timestamp  number     // 当前UNIX时间戳
     sign       string     // eos、ethereum签名
     uuID       string     // dapp server生成的，用于此次登录验证的唯一标识     
@@ -129,10 +129,10 @@ sign = ecc.sign(data, privateKey)
 // dapp生成的用于钱包扫描的二维码数据格式
 {
 	protocol    string   // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
-    	version     string   // 协议版本信息，如1.0
-        blockchain  string   // 公链标识（eosio、eosforce、ethereum等）
+	version     string   // 协议版本信息，如1.0
+	blockchain  string   // 公链标识（eosio、eosforce、ethereum等）
 	dappName    string   // dapp名字，用于在钱包APP中展示，可选
-    	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选
+	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选
 	action      string   // 支付时，赋值为transfer，必须
 	from        string   // 付款人的EOS账号、EOSForce账号或Ethereum地址，必须
 	to          string   // 收款人的EOS账号、EOSForce账号或Ethereum地址，必须
@@ -153,6 +153,7 @@ sign = ecc.sign(data, privateKey)
 - dapp可根据callback中的txID去主网查询此笔交易（不能完全依赖此方式来确认用户的付款）；或dapp自行搭建节点监控EOS、EOS原力或Ethereum主网，检查代币是否到账
 - 对于流行币种如IQ，如果二维码中给出的contract名和官方的合约名不一致，钱包方要提醒用户，做二次确认
 - 钱包应该提醒用户注意辨别二维码的来源，避免被钓鱼攻击
+- TRON钱包支付，请查看协议第4部分（交易体）封装
 
 
 #### 场景2：dapp的移动端拉起钱包App，请求支付授权
@@ -164,10 +165,10 @@ sign = ecc.sign(data, privateKey)
 {
 	protocol    string   // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
 	version     string   // 协议版本信息，如1.0
-    	blockchain  string   // 公链标识（eosio、ethereum等）
+	blockchain  string   // 公链标识（eosio、ethereum、eosforce等）
 	action      string   // 支付时，赋值为transfer
 	dappName    string   // dapp名字，用于在钱包APP中展示，可选
-    	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选	
+	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选	
 	from        string   // 付款人的EOS账号或Ethereum地址，必须
 	to          string   // 收款人的EOS账号或Ethereum地址，必须
 	amount      number   // 转账数量(带精度，如1.0000 EOS)，必须
@@ -185,6 +186,7 @@ sign = ecc.sign(data, privateKey)
 ```
 - 钱包组装上述数据，生成一笔EOS或Ethereum的transaction，用户授权此笔转账后，提交转账数据到EOS或Ethereum主网；如果有callback，则回调拉起dapp的应用
 - dapp可根据callback里的txID去主网查询此笔交易（不能完全依赖此方式来确认用户的付款）；或自行搭建节点监控EOS或Ethereum主网，检查代币是否到账
+- TRON支付，请查看协议第4部分（交易体）封装
 
 ### 4. 交易体
 #### 场景1：钱包扫描二维码，执行Transaction
@@ -198,51 +200,119 @@ sign = ecc.sign(data, privateKey)
 {
 	protocol    string   // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
 	version     string   // 协议版本信息，如1.0
-	blockchain  string   // 公链标识（eosio、ethereum等）
+	blockchain  string   // 公链标识（eosio、ethereum、eosforce、tron等）
 	action      string   // 支付时，赋值为transaction
 	dappName    string   // dapp名字，用于在钱包APP中展示，可选
 	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选	
-	actions     array    // [{
-					"code": "eosio.token",
-			     		"action": "transfer",
-			     	 	"binargs":"00000"
-				}]
+	actions     string   // JSON 数组，格式：[{"code": "eosio.token","action": "transfer","binargs":"00000"}]
 	from        string   // 要执行交易的账户
-	desc	    string   // 交易的说明信息，钱包在付款UI展示给用户，最长不要超过128个字节，可选		     
-	expired	    number   // 交易过期时间，unix时间戳			     
-	callback    string   // 用户完成操作后，钱包回调拉起dapp移动端的回调URL,如https://abc.com?action=transaction&qrcID=123，可选
-    		             // 钱包回调时在此URL后加上操作结果(result、txID)，如：https://abc.com?action=transaction&qrcID=123&result=1&txID=xxx, 
-			     // result的值为：0为用户取消，1为成功,  2为失败；txID为EOS主网上该笔交易的id（若有）
+	desc        string   // 交易的说明信息，钱包在付款UI展示给用户，最长不要超过128个字节，可选		     
+	expired     number   // 交易过期时间，unix时间戳			     
+	callback    string   // 用户完成操作后，钱包回调拉起dapp移动端的回调URL,
+				// 如https://abc.com?action=transaction&qrcID=123，可选
+				// 钱包回调时在此URL后加上操作结果(result、txID)，
+				// 如：https://abc.com?action=transaction&qrcID=123&result=1&txID=xxx, 
+				// result的值为：0为用户取消，1为成功,  2为失败；txID为EOS主网上该笔交易的id（若有）
 }
 
 ```
 #### 场景2：dapp的移动端拉起钱包App，执行Transaction
 
-> Ethereum 
- 参考支付场景，dappData用来存放交易的Data数据。
+> Ethereum(以太坊)
+
+	参考支付场景，dappData用来存放交易的Data数据。
  
-> EOS、EOS原力
+> EOS主网、EOS原力
+
  ```
 // 传递给钱包APP的数据包结构
 {
 	protocol    string   // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
 	version     string   // 协议版本信息，如1.0
-	blockchain  string   // 公链标识（eosio、eosforce等）
+	blockchain  string   // 公链标识（eosio、eosforce）
 	action      string   // 支付时，赋值为transaction
 	dappName    string   // dapp名字，用于在钱包APP中展示，可选
 	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选	
-	actions     array    // [{
-			     //		"code": "eosio.token",
-			     //		"action": "transfer",
-			     //	 	"binargs":"00000"
-			     //	}]
-	from     string      // 要执行交易的账户
+	actions     string   // JSON 数组，格式：[{"code": "eosio.token","action": "transfer","binargs":"00000"}]
+	from        string   // 要执行交易的账户
 	desc        string   // 交易的说明信息，钱包在付款UI展示给用户，最长不要超过128个字节，可选		     
-	expired	    number   // 交易过期时间，unix时间戳			     
-	callback    string   // 用户完成操作后，钱包回调拉起dapp移动端的回调URL,如appABC://abc.com?action=transfer，可选
-    		             // 钱包回调时在此URL后加上操作结果(result、txID)，如：appABC://abc.com?action=transaction&result=1&txID=xxx, result的值为：0为用户取消，1为成功,  2为失败；txID为EOS主网上该笔交易的id（若有）
+	expired     number   // 交易过期时间，unix时间戳			     
+	callback    string   // 用户完成操作后，钱包回调拉起dapp移动端的回调URL,
+				// 如appABC://abc.com?action=transfer，
+				// 可选钱包回调时在此URL后加上操作结果(result、txID)，
+				// 如：appABC://abc.com?action=transaction&result=1&txID=xxx, 
+				// result的值为：0为用户取消，1为成功,  2为失败；txID为EOS主网上该笔交易的id（若有）
 }
 
+```
+
+> TRON(波场)
+
+ ```
+// 传递给钱包APP的数据包结构
+{
+	protocol    string	// 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
+	version     string	// 协议版本信息，如1.0
+	blockchain  string	// 公链标识（tron）
+	action      string	// 调用时，赋值为transaction
+	dappName    string	// dapp名字，用于在钱包APP中展示，可选
+	dappIcon    string	// dapp图标Url，用于在钱包APP中展示，可选	
+	contract    string	// JSON 数组，格式参考下面说明；
+	from        string 	// 要执行交易的账户
+	desc        string	// 交易的说明信息，钱包在付款UI展示给用户，最长不要超过128个字节，可选		     
+	expired     number	// 交易过期时间，unix时间戳			     
+	callback    string	// 用户完成操作后，钱包回调拉起dapp移动端的回调URL,
+				// 如appABC://abc.com?action=transfer，
+				// 可选钱包回调时在此URL后加上操作结果(result、txID)，
+				// 如：appABC://abc.com?action=transaction&result=1&txID=xxx, 
+				// result的值为：0为用户取消，1为成功,  2为失败；txID为EOS主网上该笔交易的id（若有）
+}
+
+// 传递给钱包APP的contract字段说明
+
+1. TriggerSmartContract
+
+{
+	"parameter": {
+		"value": {
+			"data": "7365870b0000000000000000000000000000000000000000000000000000000000000060",
+			"owner_address": "414c9727e700492d637aa763d780d82787a48096cb",
+			"contract_address": "41e19c9914380de8eb9df99b9e6965bd5bf75f2c66",
+			"call_value": 10000000
+		},
+		"type_url": "type.googleapis.com/protocol.TriggerSmartContract"
+	},
+	"type": "TriggerSmartContract"
+}
+
+2. TransferAssetContract
+[{
+	"parameter": {
+		"value": {
+			"amount": 2,
+			"asset_name": "64696365",
+			"owner_address": "41fb73f6ebe832359142ca98349deb2d85a464b7b8",
+			"to_address": "41b621ca08256eb12f6aa3b22d16d520c03c7399dd"
+		},
+		"type_url": "type.googleapis.com/protocol.TransferAssetContract"
+	},
+	"type": "TransferAssetContract"
+}]
+
+3. TransferAssetContract
+[{
+	"parameter": {
+		"value": {
+			"amount": 8,
+			"owner_address": "41fb73f6ebe832359142ca98349deb2d85a464b7b8",
+			"to_address": "41b621ca08256eb12f6aa3b22d16d520c03c7399dd"
+		},
+		"type_url": "type.googleapis.com/protocol.TransferContract"
+	},
+	"type": "TransferContract"
+}]
+
+其它...
 ```
 ### 5. 打开 DApp URL
 #### 场景1：dapp的移动端拉起钱包App，打开对应DApp URL
@@ -256,10 +326,13 @@ sign = ecc.sign(data, privateKey)
 	action      string   // 跳转时，赋值为openUrl
 	dappName    string   // dapp名字，用于在钱包APP中展示，可选
 	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选
-	desc	    string   // 跳转的说明信息，钱包在付款UI展示给用户，最长不要超过128个字节，可选
+	desc        string   // 跳转的说明信息，钱包在付款UI展示给用户，最长不要超过128个字节，可选
 	dappUrl     string   // 要跳转的DApp URL链接		     
-	callback    string   // 用户完成操作后，钱包回调拉起dapp移动端的回调URL,如appABC://abc.com?action=openUrl，可选
-    		             // 钱包回调时在此URL后加上操作结果(result)，如：appABC://abc.com?action=openUrl&result=1, result的值为：0为用户取消,  2为失败；成功不回调；	     
+	callback    string   // 用户完成操作后，钱包回调拉起dapp移动端的回调URL,
+				// 可选,如appABC://abc.com?action=openUrl，
+				// 钱包回调时在此URL后加上操作结果(result)，
+				// 如：appABC://abc.com?action=openUrl&result=1, 
+				// result的值为：0为用户取消,  2为失败；成功不回调；	     
 }
 
 ```
