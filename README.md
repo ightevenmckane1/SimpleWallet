@@ -267,11 +267,11 @@ sign = ecc.sign(data, privateKey)
 				// 如：appABC://abc.com?action=transaction&result=1&txID=xxx, 
 				// result的值为：0为用户取消，1为成功,  2为失败；txID为EOS主网上该笔交易的id（若有）
 }
+```
 
 // 传递给钱包APP的contract字段说明
-
 1. TriggerSmartContract
-
+```
 {
 	"parameter": {
 		"value": {
@@ -284,8 +284,10 @@ sign = ecc.sign(data, privateKey)
 	},
 	"type": "TriggerSmartContract"
 }
+```
 
 2. TransferAssetContract
+```
 [{
 	"parameter": {
 		"value": {
@@ -298,8 +300,10 @@ sign = ecc.sign(data, privateKey)
 	},
 	"type": "TransferAssetContract"
 }]
+```
 
-3. TransferAssetContract
+3. TransferContract
+```
 [{
 	"parameter": {
 		"value": {
@@ -311,9 +315,9 @@ sign = ecc.sign(data, privateKey)
 	},
 	"type": "TransferContract"
 }]
+```
 
 其它...
-```
 ### 5. 打开 DApp URL
 #### 场景1：dapp的移动端拉起钱包App，打开对应DApp URL
 
