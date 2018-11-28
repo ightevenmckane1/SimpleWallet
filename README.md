@@ -276,8 +276,8 @@ sign = ecc.sign(data, privateKey)
 	"parameter": {
 		"value": {
 			"data": "7365870b0000000000000000000000000000000000000000000000000000000000000060",
-			"owner_address": "414c9727e700492d637aa763d780d82787a48096cb",
-			"contract_address": "41e19c9914380de8eb9df99b9e6965bd5bf75f2c66",
+			"owner_address": "TWXNtL6rHGyk2xeVR3QqEN9QGKfgyRTeU2",
+			"contract_address": "TWXNtL6rHGyk2xeVR3QqEN9QGKfgyRTeU2",
 			"call_value": 10000000
 		},
 		"type_url": "type.googleapis.com/protocol.TriggerSmartContract"
@@ -292,9 +292,9 @@ sign = ecc.sign(data, privateKey)
 	"parameter": {
 		"value": {
 			"amount": 2,
-			"asset_name": "64696365",
-			"owner_address": "41fb73f6ebe832359142ca98349deb2d85a464b7b8",
-			"to_address": "41b621ca08256eb12f6aa3b22d16d520c03c7399dd"
+			"asset_name": "WIN",
+			"owner_address": "TWXNtL6rHGyk2xeVR3QqEN9QGKfgyRTeU2",
+			"to_address": "TWXNtL6rHGyk2xeVR3QqEN9QGKfgyRTeU2"
 		},
 		"type_url": "type.googleapis.com/protocol.TransferAssetContract"
 	},
@@ -308,8 +308,8 @@ sign = ecc.sign(data, privateKey)
 	"parameter": {
 		"value": {
 			"amount": 8,
-			"owner_address": "41fb73f6ebe832359142ca98349deb2d85a464b7b8",
-			"to_address": "41b621ca08256eb12f6aa3b22d16d520c03c7399dd"
+			"owner_address": "TWXNtL6rHGyk2xeVR3QqEN9QGKfgyRTeU2",
+			"to_address": "TWXNtL6rHGyk2xeVR3QqEN9QGKfgyRTeU2"
 		},
 		"type_url": "type.googleapis.com/protocol.TransferContract"
 	},
