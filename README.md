@@ -272,7 +272,7 @@ sign = ecc.sign(data, privateKey)
 // 传递给钱包APP的contract字段说明
 1. TriggerSmartContract
 ```
-{
+[{
 	"parameter": {
 		"value": {
 			"data": "7365870b0000000000000000000000000000000000000000000000000000000000000060",
@@ -283,7 +283,7 @@ sign = ecc.sign(data, privateKey)
 		"type_url": "type.googleapis.com/protocol.TriggerSmartContract"
 	},
 	"type": "TriggerSmartContract"
-}
+}]
 ```
 
 2. TransferAssetContract
