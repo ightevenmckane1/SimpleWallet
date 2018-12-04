@@ -265,7 +265,7 @@ sign = ecc.sign(data, privateKey)
 				// 如appABC://abc.com?action=transfer，
 				// 可选钱包回调时在此URL后加上操作结果(result、txID)，
 				// 如：appABC://abc.com?action=transaction&result=1&txID=xxx, 
-				// result的值为：0为用户取消，1为成功,  2为失败；txID为EOS主网上该笔交易的id（若有）
+				// result的值为：0为用户取消，1为成功,  2为失败；txID为TRON主网上该笔交易的id（若有）
 }
 ```
 
