@@ -5,8 +5,7 @@
 协议最后更新：2018.09.17
 
 ## 简介
-SimpleWallet是一个数字资产钱包和dapp的通用对接协议。
-
+SimpleWallet是一个数字资产钱包和dapp的通用对接协议，支持Ethereum、EOS、EOS Force、TRON。
 
 ## 功能列表
 - 登录
@@ -54,7 +53,7 @@ SimpleWallet是一个数字资产钱包和dapp的通用对接协议。
 {
     protocol	string   // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
     version     string   // 协议版本信息，如1.0
-    blockchain  string   // 公链标识（eosio、eosforce、ethereum等）
+    blockchain  string   // 公链标识（eosio、eosforce、ethereum,tron等）
     dappName    string   // dapp名字
     dappIcon    string   // dapp图标 
     action      string   // 赋值为login
@@ -76,7 +75,7 @@ sign = ecc.sign(data, privateKey)
 {
     protocol   string     // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
     version    string     // 协议版本信息，如1.0
-    blockchain string    // 公链标识（eosio、eosforce、ethereum等）
+    blockchain string    // 公链标识（eosio、eosforce、ethereum,tron等）
     timestamp  number     // 当前UNIX时间戳
     sign       string     // eos、ethereum签名
     uuID       string     // dapp server生成的，用于此次登录验证的唯一标识     
@@ -104,7 +103,7 @@ sign = ecc.sign(data, privateKey)
 {
     protocol	string   // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
     version     string   // 协议版本信息，如1.0
-    blockchain  string   // 公链标识（eosio、eosforce、ethereum等）
+    blockchain  string   // 公链标识（eosio、eosforce、ethereum,tron等）
     dappName    string   // dapp名字，用于在钱包APP中展示
     dappIcon    string   // dapp图标Url，用于在钱包APP中展示
     action      string   // 赋值为login
@@ -130,7 +129,7 @@ sign = ecc.sign(data, privateKey)
 {
 	protocol    string   // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
 	version     string   // 协议版本信息，如1.0
-	blockchain  string   // 公链标识（eosio、eosforce、ethereum等）
+	blockchain  string   // 公链标识（eosio、eosforce、ethereum,tron等）
 	dappName    string   // dapp名字，用于在钱包APP中展示，可选
 	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选
 	action      string   // 支付时，赋值为transfer，必须
@@ -165,7 +164,7 @@ sign = ecc.sign(data, privateKey)
 {
 	protocol    string   // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
 	version     string   // 协议版本信息，如1.0
-	blockchain  string   // 公链标识（eosio、ethereum、eosforce等）
+	blockchain  string   // 公链标识（eosio、ethereum、eosforce,tron等）
 	action      string   // 支付时，赋值为transfer
 	dappName    string   // dapp名字，用于在钱包APP中展示，可选
 	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选	
