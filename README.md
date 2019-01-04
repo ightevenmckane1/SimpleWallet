@@ -133,7 +133,7 @@ sign = ecc.sign(data, privateKey)
 	dappName    string   // dapp名字，用于在钱包APP中展示，可选
 	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选
 	action      string   // 支付时，赋值为transfer，必须
-	from        string   // 付款人的EOS账号、EOSForce账号或Ethereum地址，必须
+	from        string   // 付款人的EOS账号、EOSForce账号或Ethereum地址，可选
 	to          string   // 收款人的EOS账号、EOSForce账号或Ethereum地址，必须
 	amount      number   // 转账数量(带精度，如1.0000 EOS)，必须
 	contract    string   // 转账的token所属的contract账号名或地址，必须
@@ -164,11 +164,11 @@ sign = ecc.sign(data, privateKey)
 {
 	protocol    string   // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
 	version     string   // 协议版本信息，如1.0
-	blockchain  string   // 公链标识（eosio、ethereum、eosforce,tron等）
+	blockchain  string   // 公链标识（eosio、ethereum、eosforce等）
 	action      string   // 支付时，赋值为transfer
 	dappName    string   // dapp名字，用于在钱包APP中展示，可选
 	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选	
-	from        string   // 付款人的EOS账号或Ethereum地址，必须
+	from        string   // 付款人的EOS账号或Ethereum地址，可选
 	to          string   // 收款人的EOS账号或Ethereum地址，必须
 	amount      number   // 转账数量(带精度，如1.0000 EOS)，必须
 	contract    string   // 转账的token所属的contract账号名或地址	
@@ -204,7 +204,7 @@ sign = ecc.sign(data, privateKey)
 	dappName    string   // dapp名字，用于在钱包APP中展示，可选
 	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选	
 	actions     string   // JSON 数组，格式：[{"code": "eosio.token","action": "transfer","binargs":"00000"}]
-	from        string   // 要执行交易的账户
+	from        string   // 要执行交易的账户，可选
 	desc        string   // 交易的说明信息，钱包在付款UI展示给用户，最长不要超过128个字节，可选		     
 	expired     number   // 交易过期时间，unix时间戳			     
 	callback    string   // 用户完成操作后，钱包回调拉起dapp移动端的回调URL,
@@ -233,7 +233,7 @@ sign = ecc.sign(data, privateKey)
 	dappName    string   // dapp名字，用于在钱包APP中展示，可选
 	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选	
 	actions     string   // JSON 数组，格式：[{"code": "eosio.token","action": "transfer","binargs":"00000"}]
-	from        string   // 要执行交易的账户
+	from        string   // 要执行交易的账户，可选
 	desc        string   // 交易的说明信息，钱包在付款UI展示给用户，最长不要超过128个字节，可选		     
 	expired     number   // 交易过期时间，unix时间戳			     
 	callback    string   // 用户完成操作后，钱包回调拉起dapp移动端的回调URL,
@@ -257,7 +257,7 @@ sign = ecc.sign(data, privateKey)
 	dappName    string	// dapp名字，用于在钱包APP中展示，可选
 	dappIcon    string	// dapp图标Url，用于在钱包APP中展示，可选	
 	contract    string	// JSON 数组，格式参考下面说明；
-	from        string 	// 要执行交易的账户
+	from        string 	// 要执行交易的账户，可选
 	desc        string	// 交易的说明信息，钱包在付款UI展示给用户，最长不要超过128个字节，可选		     
 	expired     number	// 交易过期时间，unix时间戳			     
 	callback    string	// 用户完成操作后，钱包回调拉起dapp移动端的回调URL,
