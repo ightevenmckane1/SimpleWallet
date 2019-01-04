@@ -2,7 +2,7 @@
 
 版本：1.0
 
-协议最后更新：2018.09.17
+协议最后更新：2019.01.04
 
 ## 简介
 SimpleWallet是一个数字资产钱包和dapp的通用对接协议，支持Ethereum、EOS、EOS Force、TRON。
@@ -103,7 +103,7 @@ sign = ecc.sign(data, privateKey)
 {
     protocol	string   // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
     version     string   // 协议版本信息，如1.0
-    blockchain  string   // 公链标识（eosio、eosforce、ethereum,tron等）
+    blockchain  string   // 公链标识（eosio、eosforce、ethereum等）
     dappName    string   // dapp名字，用于在钱包APP中展示
     dappIcon    string   // dapp图标Url，用于在钱包APP中展示
     action      string   // 赋值为login
@@ -129,7 +129,7 @@ sign = ecc.sign(data, privateKey)
 {
 	protocol    string   // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
 	version     string   // 协议版本信息，如1.0
-	blockchain  string   // 公链标识（eosio、eosforce、ethereum,tron等）
+	blockchain  string   // 公链标识（eosio、eosforce、ethereum等）
 	dappName    string   // dapp名字，用于在钱包APP中展示，可选
 	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选
 	action      string   // 支付时，赋值为transfer，必须
