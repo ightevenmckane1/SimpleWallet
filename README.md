@@ -330,12 +330,7 @@ sign = ecc.sign(data, privateKey)
 	dappName    string   // dapp名字，用于在钱包APP中展示，可选
 	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选
 	desc        string   // 跳转的说明信息，钱包在付款UI展示给用户，最长不要超过128个字节，可选
-	dappUrl     string   // 要跳转的DApp URL链接		     
-	callback    string   // 用户完成操作后，钱包回调拉起dapp移动端的回调URL,
-				// 可选,如appABC://abc.com?action=openUrl，
-				// 钱包回调时在此URL后加上操作结果(result)，
-				// 如：appABC://abc.com?action=openUrl&result=1, 
-				// result的值为：0为用户取消,  2为失败；成功不回调；	     
+	dappUrl     string   // 要跳转的DApp URL链接		     	     
 }
 
 ```
