@@ -291,7 +291,7 @@ sign = ecc.sign(data, privateKey)
 	"parameter": {
 		"value": {
 			"amount": 2,
-			"asset_name": "WIN",
+			"asset_name": "tokenId",  // asset_name对应的值为tokenId
 			"owner_address": "TWXNtL6rHGyk2xeVR3QqEN9QGKfgyRTeU2",
 			"to_address": "TWXNtL6rHGyk2xeVR3QqEN9QGKfgyRTeU2"
 		},
