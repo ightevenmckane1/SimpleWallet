@@ -336,7 +336,7 @@ sign = ecc.sign(data, privateKey)
 				// 钱包回调时在此URL后加上操作结果(result)，
 				// 如：appABC://abc.com?action=openUrl&result=0, 
 				// result的值为：0为用户取消,  2为失败；成功不回调；
-				// 该回调只会在打开URL失败时触发
+				// 该回调只会在打开URL失败或取消时触发
 }
 
 ```
