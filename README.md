@@ -315,9 +315,71 @@ sign = ecc.sign(data, privateKey)
 	"type": "TransferContract"
 }]
 ```
+### 5. 消息签名
+#### 场景1：扫描二维码进行签名
+ ```
+// 传递给钱包APP的数据包结构
+{
+	protocol    string   // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
+	version     string   // 协议版本信息，如1.0
+	blockchain  string   // 公链标识（eosio、ethereum、eosforce、tron等）
+	action      string   // 跳转时，赋值为signMessage
+	dappName    string   // dapp名字，用于在钱包APP中展示，可选
+	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选
+	desc        string   // 跳转的说明信息，钱包在付款UI展示给用户，最长不要超过128个字节，可选
+	dappUrl     string   // 要跳转的DApp URL链接
+	callback    string   // 用户完成操作后，钱包回调拉起dapp移动端的回调URL,
+				// 如https://abc.com?action=signMessage，可选
+				// 钱包回调时在此URL后加上操作结果(signedMessage)，
+				// 如：https://abc.com?action=signMessage&result=1&signedMessage=xxx, 
+				// result的值为：0为用户取消，1为成功,  2为失败；signedMessage被签名后的数据
+}
 
-其它...
-### 5. 打开 DApp URL
+```
+#### 场景2：dapp的移动端拉起钱包进行签名
+ ```
+// 传递给钱包APP的数据包结构
+{
+	protocol    string   // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
+	version     string   // 协议版本信息，如1.0
+	blockchain  string   // 公链标识（eosio、ethereum、eosforce、tron等）
+	action      string   // 跳转时，赋值为signMessage
+	dappName    string   // dapp名字，用于在钱包APP中展示，可选
+	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选
+	desc        string   // 跳转的说明信息，钱包在付款UI展示给用户，最长不要超过128个字节，可选
+	message     string   // 要签名的数据
+	isHex       bool     // 是否是16进制数据
+	callback    string   // 用户完成操作后，钱包回调拉起dapp移动端的回调URL,
+				// 可选,如appABC://abc.com?action=signMessage，
+				// 钱包回调时在此URL后加上操作结果(result)，
+				// 如：appABC://abc.com?action=signMessage&result=1&signedMessage=xxx
+				//result的值为：0为用户取消，1为成功,  2为失败；signedMessage被签名后的数据
+}
+
+```
+#### 场景2：扫描二维码进行签名
+ ```
+// 传递给钱包APP的数据包结构
+{
+	protocol    string   // 协议名，钱包用来区分不同协议，本协议为 SimpleWallet
+	version     string   // 协议版本信息，如1.0
+	blockchain  string   // 公链标识（eosio、ethereum、eosforce、tron等）
+	action      string   // 跳转时，赋值为openUrl
+	dappName    string   // dapp名字，用于在钱包APP中展示，可选
+	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选
+	desc        string   // 跳转的说明信息，钱包在付款UI展示给用户，最长不要超过128个字节，可选
+	dappUrl     string   // 要跳转的DApp URL链接
+	callback    string   // 用户完成操作后，钱包回调拉起dapp移动端的回调URL,
+				// 可选,如appABC://abc.com?action=openUrl，
+				// 钱包回调时在此URL后加上操作结果(result)，
+				// 如：appABC://abc.com?action=openUrl&result=0, 
+				// result的值为：0为用户取消,  2为失败；成功不回调；
+				// 该回调只会在打开URL失败或取消时触发
+}
+
+```
+
+### 6. 打开 DApp URL
 #### 场景1：dapp的移动端拉起钱包App，打开对应DApp URL
 
  ```
