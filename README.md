@@ -333,7 +333,7 @@ sign = ecc.sign(data, privateKey)
 	callback    string   // 用户完成操作后，钱包回调拉起dapp移动端的回调URL,
 				// 如https://abc.com?action=signMessage，可选
 				// 钱包回调时在此URL后加上操作结果(signedMessage)，
-				// 如：https://abc.com?action=signMessage&result=1&pubKey=xxx&signedMessage=xxx, 
+				// 如：https://abc.com?action=signMessage&result=1&account=xxx&pubKey=xxx&signedMessage=xxx, 
 				// result的值为：0为用户取消，1为成功,  2为失败；signedMessage被签名后的数据
 }
  ```
@@ -355,7 +355,7 @@ sign = ecc.sign(data, privateKey)
 	callback    string   // 用户完成操作后，钱包回调拉起dapp移动端的回调URL,
 				// 可选,如appABC://abc.com?action=signMessage，
 				// 钱包回调时在此URL后加上操作结果(result)，
-				// 如：appABC://abc.com?action=signMessage&result=1&pubKey=xxx&signedMessage=xxx
+				// 如：appABC://abc.com?action=signMessage&result=1&account=xxx&pubKey=xxx&signedMessage=xxx
 				//result的值为：0为用户取消，1为成功,  2为失败；signedMessage被签名后的数据
 }
 
