@@ -328,13 +328,12 @@ sign = ecc.sign(data, privateKey)
 	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选
 	desc        string   // 跳转的说明信息，钱包在付款UI展示给用户，最长不要超过128个字节，可选
 	from        string   // 要执行签名的账户,可选
-        uuID        string   // dapp生成的，用于dapp签名唯一标识
 	message     string   // 要签名的数据
 	isHex       bool     // 是否是16进制数据
 	callback    string   // 用户完成操作后，钱包回调拉起dapp移动端的回调URL,
 				// 如https://abc.com?action=signMessage，可选
 				// 钱包回调时在此URL后加上操作结果(signedMessage)，
-				// 如：https://abc.com?action=signMessage&result=1&uuID=xxx&signedMessage=xxx, 
+				// 如：https://abc.com?action=signMessage&result=1&pubKey=xxx&signedMessage=xxx, 
 				// result的值为：0为用户取消，1为成功,  2为失败；signedMessage被签名后的数据
 }
  ```
@@ -350,14 +349,13 @@ sign = ecc.sign(data, privateKey)
 	dappName    string   // dapp名字，用于在钱包APP中展示，可选
 	dappIcon    string   // dapp图标Url，用于在钱包APP中展示，可选
 	desc        string   // 跳转的说明信息，钱包在付款UI展示给用户，最长不要超过128个字节，可选
-	from        string   // 要执行签名的账户
-        uuID        string   // dapp生成的，用于dapp签名唯一标识   
+	from        string   // 要执行签名的账户 
 	message     string   // 要签名的数据
 	isHex       bool     // 是否是16进制数据
 	callback    string   // 用户完成操作后，钱包回调拉起dapp移动端的回调URL,
 				// 可选,如appABC://abc.com?action=signMessage，
 				// 钱包回调时在此URL后加上操作结果(result)，
-				// 如：appABC://abc.com?action=signMessage&result=1&uuID=xxx&signedMessage=xxx
+				// 如：appABC://abc.com?action=signMessage&result=1&pubKey=xxx&signedMessage=xxx
 				//result的值为：0为用户取消，1为成功,  2为失败；signedMessage被签名后的数据
 }
 
