@@ -1,7 +1,4 @@
-## 概述
-本文档是对 Math Wallet 常用二维码格式说明
-
-## 二维码格式：
+## Math Wallet QRCode 文档
 
 转账
 ~~~
