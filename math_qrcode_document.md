@@ -14,19 +14,5 @@
     }
 }
 ~~~
-购买内存
-~~~
-{
-    "client": "MathWallet",
-    "type": "EOS",
-    "action": "createAccount",
-    "data": {
-        "account_name": "bigbigbigbig",
-        "owner": "EOS7n5Aufs8wzsDaNpgez4HUz9W4VU45sQMKm8tAYRrshy1q3twPD",
-        "active": "EOS7n5Aufs8wzsDaNpgez4HUz9W4VU45sQMKm8tAYRrshy1q3twPD",
-        "ram": 1024,
-        "net": "0.3000 EOS",
-        "cpu": "0.3000 EOS"
-    }
-}
-~~~
+
+* 使用 SimpleWallet 协议，可参考 https://github.com/MediShares/SimpleWallet/blob/master/README.md
