@@ -10,7 +10,8 @@
         "to": "bigbigbigbig",
         "amount": "1.0000 EOS",
         "precision": 4,
-        "contract": "eosio.token"
+        "contract": "eosio.token",
+        "memo":"memo"
     }
 }
 ~~~
